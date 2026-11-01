@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assetra Med — Healthcare Equipment Management &amp; Service Platform</title>
+  <meta name="description" content="Assetra Med connects hospitals, biomedical service engineers and medical equipment companies in Coimbatore." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #164e8b;
+      --teal: #16a6a1;
+      --text: #172b4d;
+      --muted: #64748b;
+      --bg: #f7fafc;
+      --soft: #eff4ff;
+      --white: #ffffff;
+      --border: rgba(194, 198, 209, 0.3);
+      --border-strong: rgba(194, 198, 209, 0.6);
+      --error: #ba1a1a;
+      --shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+    body {
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .material-symbols-outlined {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-feature-settings: "liga";
+      font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .section { padding: 40px 0; }
+    .section-alt { background: var(--bg); }
+    .section-head { max-width: 672px; margin: 0 auto 40px; text-align: center; display: grid; gap: 8px; }
+    h1, h2, h3, h4 { font-family: "Manrope", sans-serif; color: var(--primary); }
+    h2 { font-size: 36px; line-height: 44px; font-weight: 700; letter-spacing: -0.72px; }
+    h3 { font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.09px; }
+    .subhead { font-size: 15px; line-height: 24px; color: var(--muted); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 16px 24px; border-radius: 8px;
+      font-family: "Inter", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.14px;
+      border: 1px solid transparent; cursor: pointer; transition: opacity .2s, transform .2s;
+      box-shadow: var(--shadow); justify-content: center; text-align: center;
+    }
+    .btn:hover { opacity: .92; transform: translateY(-1px); }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-teal { background: var(--teal); color: #fff; }
+    .btn-outline { background: #fff; color: var(--primary); border-color: rgba(194, 198, 209, 0.5); box-shadow: none; }
+    .btn-ghost { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); box-shadow: none; }
+    .btn-block { width: 100%; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* ---------- Header ---------- */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    .nav { height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 8px; font-family: "Manrope", sans-serif; font-size: 24px; letter-spacing: -0.6px; }
+    .brand-icon {
+      width: 40px; height: 40px; border-radius: 8px; background: var(--soft);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--primary);
+    }
+    .brand b { color: var(--primary); font-weight: 700; }
+    .brand span { color: var(--teal); font-weight: 800; }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: var(--muted); letter-spacing: .14px; padding-bottom: 6px; }
+    .nav-links a.active { color: var(--primary); font-weight: 700; border-bottom: 2px solid var(--primary); }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta { background: var(--teal); color: #fff; padding: 16px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; display: inline-flex; gap: 4px; align-items: center; white-space: nowrap; box-shadow: var(--shadow); }
+    .menu-toggle {
+      display: none; background: none; border: 1px solid var(--border-strong); border-radius: 8px;
+      width: 44px; height: 44px; cursor: pointer; color: var(--primary); align-items: center; justify-content: center;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 160px 0 80px; background: var(--white); }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+      background: var(--soft); border: 1px solid rgba(194,198,209,0.4);
+      border-radius: 9999px; padding: 5px 17px; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .24px;
+    }
+    .pill-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); }
+    .hero h1 { font-size: 52px; line-height: 62px; font-weight: 800; letter-spacing: -1.56px; font-family: "Manrope", sans-serif; color: var(--primary); }
+    .hero h1 .accent { color: var(--teal); }
+    .hero-sub { font-size: 18px; line-height: 28px; color: var(--muted); max-width: 576px; }
+    .callout {
+      background: var(--soft); border-left: 4px solid var(--teal);
+      border-radius: 0 8px 8px 0; padding: 16px 16px 16px 20px; max-width: 576px;
+    }
+    .callout-quote { font-style: italic; font-weight: 600; font-size: 15px; line-height: 24px; color: var(--primary); }
+    .callout-note { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .33px; margin-top: 4px; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding-top: 4px; }
+    .trust { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+    .trust .material-symbols-outlined { font-size: 16px; color: var(--teal); }
+    .hero-visual {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+      padding: 17px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      min-height: 120px; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-visual-inner {
+      width: 100%; min-height: 82px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--soft), #fff);
+      display: flex; align-items: center; justify-content: center; color: var(--primary);
+    }
+    .hero-visual-inner .material-symbols-outlined { font-size: 48px; opacity: .7; }
+
+    /* ---------- Why ---------- */
+    .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .info-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      padding: 25px; min-height: 186px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .icon-box {
+      width: 48px; height: 48px; border-radius: 8px; background: var(--soft);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--primary);
+    }
+    .icon-box .material-symbols-outlined { font-size: 24px; }
+    .info-card p { font-size: 13px; line-height: 21px; color: var(--muted); }
+    .banner {
+      margin-top: 40px; background: var(--soft); border: 1px solid var(--border); border-radius: 12px;
+      padding: 41px; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .banner-eyebrow { font-size: 12px; font-weight: 600; color: var(--teal); letter-spacing: .6px; text-transform: uppercase; }
+    .banner h4 { font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.24px; margin: 4px 0; }
+    .banner p { font-size: 15px; line-height: 24px; color: var(--muted); }
+
+    /* ---------- How it works ---------- */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow);
+      padding: 25px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
+    }
+    .step-top { display: flex; justify-content: space-between; align-items: center; }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%; color: #fff;
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;
+    }
+    .step-num.blue { background: var(--primary); }
+    .step-num.teal { background: var(--teal); }
+    .step-top .material-symbols-outlined { color: var(--primary); font-size: 20px; }
+    .step h3 { padding-top: 4px; }
+    .step > p { font-size: 13px; line-height: 20px; color: var(--muted); }
+    .preview {
+      background: var(--soft); border: 1px solid var(--border); border-radius: 8px;
+      padding: 9px; display: flex; align-items: center; gap: 8px;
+    }
+    .preview-qr {
+      width: 48px; height: 48px; background: #fff; border: 1px solid rgba(194,198,209,0.4); border-radius: 4px;
+      display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0;
+    }
+    .preview-txt { display: grid; gap: 2px; }
+    .small-label { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .33px; }
+    .small-strong { font-size: 12px; font-weight: 700; color: var(--primary); letter-spacing: .24px; }
+    .small-teal { font-size: 11px; font-weight: 600; color: var(--teal); letter-spacing: .33px; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 1px solid rgba(22,166,161,0.4);
+      display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0;
+    }
+    .log-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: .33px; }
+    .log-row + .log-row { border-top: 1px solid rgba(194,198,209,0.2); padding-top: 4px; }
+    .log-row .ok { color: var(--teal); font-weight: 600; }
+    .log-row .pending { color: #737781; font-weight: 600; }
+    .log-wrap { display: grid; gap: 4px; width: 100%; }
+
+    /* ---------- Lead form ---------- */
+    .lead-wrap { max-width: 896px; margin: 0 auto; padding: 0 40px; }
+    .role-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .role-tab {
+      text-align: left; cursor: pointer; font-family: inherit;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 17px;
+      display: flex; flex-direction: column; gap: 4px; color: var(--text);
+    }
+    .role-tab .role-head { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 14px; color: var(--primary); }
+    .role-tab .role-head .material-symbols-outlined { font-size: 18px; }
+    .role-tab small { font-size: 13px; color: var(--muted); line-height: 20px; }
+    .role-tab.active { background: var(--soft); border-color: var(--teal); }
+    .form-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 16px;
+      padding: 41px; box-shadow: var(--shadow);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: .24px; }
+    .field label .req { color: var(--error); }
+    .field input {
+      width: 100%; height: 46px; padding: 13px 17px; border-radius: 8px;
+      border: 1px solid var(--border-strong); background: #fff;
+      font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field input::placeholder { color: #6b7280; }
+    .field input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(22,166,161,0.15); }
+    .submit-wrap { display: grid; gap: 8px; padding-top: 8px; }
+    .submit-wrap .btn { width: 100%; }
+    .form-status { min-height: 20px; font-size: 14px; font-weight: 600; text-align: center; }
+    .form-status.success { color: var(--teal); }
+    .form-status.error { color: var(--error); }
+    .form-note { font-size: 11px; font-weight: 500; color: var(--muted); text-align: center; letter-spacing: .33px; }
+
+    /* ---------- Free offers ---------- */
+    .offers { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 16px; }
+    .offer {
+      background: var(--white); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow);
+      padding: 41px; display: flex; flex-direction: column; gap: 32px;
+    }
+    .offer-top { display: flex; justify-content: space-between; align-items: center; }
+    .badge {
+      background: var(--soft); border: 1px solid rgba(22,166,161,0.3); border-radius: 9999px;
+      padding: 3px 9px; font-size: 12px; font-weight: 600; color: var(--teal); letter-spacing: .24px;
+    }
+    .offer-top .material-symbols-outlined { color: var(--primary); }
+    .offer h3 { font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.24px; margin-top: 12px; }
+    .offer > div > p { font-size: 13px; line-height: 20px; color: var(--muted); margin-top: 4px; }
+    .offer ul { list-style: none; display: grid; gap: 8px; margin-top: 20px; }
+    .offer li { display: flex; align-items: center; gap: 8px; font-size: 13px; line-height: 20px; color: var(--text); }
+    .offer li::before {
+      content: ""; width: 10px; height: 7.5px; flex-shrink: 0;
+      border-left: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(-45deg) translate(2px, -2px);
+    }
+    .offer-foot { margin-top: auto; }
+    .offer-foot .btn { width: 100%; }
+    .disclaimer {
+      margin: 24px auto 0; max-width: 576px; background: var(--soft); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px; text-align: center; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .33px;
+    }
+
+    /* ---------- Testimonials ---------- */
+    .testi-pill {
+      display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 8px;
+      background: var(--soft); border: 1px solid rgba(194,198,209,0.4); border-radius: 9999px;
+      padding: 5px 17px; font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: .24px;
+    }
+    .testi-pill .material-symbols-outlined { color: var(--teal); font-size: 16px; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testi {
+      background: rgba(247,250,252,0.5); border: 1px dashed #c2c6d1; border-radius: 12px; padding: 25px;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 24px; min-height: 187px;
+    }
+    .testi-who { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; color: var(--primary); }
+    .testi-who .avatar-soft {
+      width: 32px; height: 32px; border-radius: 50%; background: #e5eeff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .testi-who .avatar-soft .material-symbols-outlined { font-size: 16px; color: var(--primary); }
+    .testi p.quote { font-style: italic; font-size: 13px; line-height: 20px; color: var(--muted); margin-top: 16px; }
+    .testi-foot { border-top: 1px solid rgba(194,198,209,0.2); padding-top: 17px; display: flex; align-items: center; gap: 4px; color: #737781; font-size: 11px; font-weight: 500; letter-spacing: .33px; }
+    .testi-foot .material-symbols-outlined { font-size: 14px; }
+
+    /* ---------- FAQ ---------- */
+    .faq-list { max-width: 816px; margin: 0 auto; display: grid; gap: 8px; }
+    .faq-item { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .faq-item summary {
+      list-style: none; cursor: pointer; padding: 16px 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      font-family: "Manrope", sans-serif; font-weight: 600; font-size: 18px; color: var(--primary);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: ""; width: 8px; height: 8px; flex-shrink: 0;
+      border-right: 2px solid var(--primary); border-bottom: 2px solid var(--primary);
+      transform: rotate(45deg); transition: transform .2s; margin-right: 4px;
+    }
+    .faq-item[open] summary::after { transform: rotate(-135deg); }
+    .faq-item p { padding: 0 24px 18px; font-size: 14px; line-height: 22px; color: var(--muted); }
+
+    /* ---------- Final CTA ---------- */
+    .final-cta { background: var(--primary); position: relative; overflow: hidden; padding: 40px 0; }
+    .final-cta .wave { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .12; pointer-events: none; }
+    .final-cta .inner { position: relative; max-width: 896px; margin: 0 auto; padding: 0 40px; text-align: center; display: grid; gap: 8px; justify-items: center; }
+    .final-cta h2 { color: #fff; }
+    .final-cta p { font-size: 18px; line-height: 28px; color: #d5e3ff; max-width: 576px; }
+    .final-cta .btns { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; padding-top: 16px; }
+
+    /* ---------- Footer ---------- */
+    .footer { background: var(--soft); border-top: 1px solid rgba(194,198,209,0.4); padding: 41px 0 24px; }
+    .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; }
+    .footer-brand p { font-size: 13px; line-height: 20px; color: var(--muted); margin: 8px 0 12px; }
+    .footer-loc { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: .24px; }
+    .footer-loc .material-symbols-outlined { color: var(--primary); font-size: 16px; }
+    .footer h4 { font-size: 14px; font-weight: 700; color: var(--primary); letter-spacing: .14px; font-family: "Inter", sans-serif; margin-bottom: 12px; }
+    .footer ul { list-style: none; display: grid; gap: 4px; }
+    .footer ul a { display: block; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .24px; padding: 5.5px 0 2.5px; }
+    .footer ul a:hover { color: var(--primary); }
+    .footer .contact-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .24px; padding: 4px 0; }
+    .footer .contact-item .material-symbols-outlined { color: #737781; font-size: 16px; }
+    .footer-bottom {
+      margin-top: 32px; border-top: 1px solid var(--border); padding-top: 24px;
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      font-size: 13px; color: var(--muted);
+    }
+    .footer-bottom .net { font-size: 11px; font-weight: 500; color: #737781; letter-spacing: .33px; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1100px) {
+      .container { padding: 0 24px; }
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 13px; }
+      .nav-cta { font-size: 13px; padding: 12px 16px; }
+    }
+    @media (max-width: 960px) {
+      .menu-toggle { display: inline-flex; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-links.open, .nav-cta.open {
+        display: flex; position: absolute; left: 0; right: 0; background: #fff;
+      }
+      .nav-links.open { top: 80px; flex-direction: column; align-items: flex-start; padding: 16px 24px; gap: 14px; border-bottom: 1px solid var(--border); box-shadow: 0 8px 16px rgba(0,0,0,.06); }
+      .nav-cta.open { top: auto; bottom: 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 42px; line-height: 50px; letter-spacing: -1px; }
+      .cards-3, .steps, .testi-grid { grid-template-columns: 1fr; }
+      .offers { grid-template-columns: 1fr; }
+      .banner { flex-direction: column; align-items: flex-start; padding: 28px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      h2 { font-size: 30px; line-height: 38px; }
+    }
+    @media (max-width: 640px) {
+      .container, .lead-wrap, .final-cta .inner { padding: 0 20px; }
+      .hero { padding: 120px 0 56px; }
+      .hero h1 { font-size: 34px; line-height: 42px; letter-spacing: -0.6px; }
+      .hero-sub { font-size: 16px; line-height: 24px; }
+      .role-tabs { grid-template-columns: 1fr; }
+      .form-card { padding: 24px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .offer { padding: 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-row .btn { width: 100%; }
+      .faq-item summary { font-size: 16px; padding: 14px 18px; }
+      .faq-item p { padding: 0 18px 16px; }
+      .final-cta p { font-size: 16px; line-height: 24px; }
+      .final-cta .btns .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HEADER: STICKY TOP NAVIGATION ============ -->
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#home" class="brand" aria-label="Assetra Med home">
+        <span class="brand-icon"><span class="material-symbols-outlined">monitor_heart</span></span>
+        <span><b>Assetra</b> <span>Med</span></span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Primary">
+        <a href="#home" class="active">Home</a>
+        <a href="#why">Why Assetra Med</a>
+        <a href="#how">How It Works</a>
+        <a href="#early-access">Early Access</a>
+        <a href="#faq">FAQs</a>
+      </nav>
+
+      <a href="#lead-form" class="nav-cta" id="navCta">
+        Join Early Access
+        <span class="material-symbols-outlined" style="font-size:14px">arrow_forward</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ SECTION 1: HERO ============ -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-left" style="display:flex;flex-direction:column;gap:16px;">
+          <span class="pill"><span class="pill-dot"></span>Starting with Multi-Parameter Patient Monitors</span>
+
+          <h1>Medical Equipment Service, <span class="accent">Made Easier.</span></h1>
+
+          <p class="hero-sub">Find trusted biomedical engineers nearby. Keep your hospital equipment service history organised with Assetra Med.</p>
+
+          <div class="callout">
+            <div class="callout-quote">“Ungal Hospital Equipment-ku, Nambikkaiyana Service Oru Click-la.”</div>
+            <div class="callout-note">Ground-level service network built for Western Tamil Nadu hospitals</div>
+          </div>
+
+          <div class="cta-row">
+            <a href="#lead-form" class="btn btn-primary">
+              Join Early Access
+              <span class="material-symbols-outlined" style="font-size:14px">app_registration</span>
+            </a>
+            <a href="#how" class="btn btn-outline">
+              Explore How It Works
+              <span class="material-symbols-outlined" style="font-size:14px">arrow_downward</span>
+            </a>
+          </div>
+
+          <div class="trust">
+            <span class="material-symbols-outlined">verified_user</span>
+            Built for small &amp; medium hospitals across Coimbatore &amp; Kongu region.
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-visual" aria-label="Assetra Med patient monitor diagnostics with QR integration and engineer dispatch in Coimbatore">
+            <div class="hero-visual-inner">
+              <span class="material-symbols-outlined">monitor_heart</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2: WHY WE ARE BUILDING THIS ============ -->
+    <section class="section" id="why" style="border-top:1px solid rgba(194,198,209,0.2)">
+      <div class="container">
+        <div class="section-head">
+          <h2>Why We Are Building Assetra Med</h2>
+          <p class="subhead">We have seen how difficult equipment servicing can be for smaller hospitals and independent engineers.</p>
+        </div>
+
+        <div class="cards-3">
+          <article class="info-card">
+            <div class="icon-box"><span class="material-symbols-outlined">person_search</span></div>
+            <h3>Finding the Right Engineer Is Difficult</h3>
+            <p>When a patient monitor stops working, hospitals need help finding a reliable service engineer.</p>
+          </article>
+          <article class="info-card">
+            <div class="icon-box"><span class="material-symbols-outlined" style="color:var(--teal)">hub</span></div>
+            <h3>Engineers Need Better Connections</h3>
+            <p>Independent biomedical engineers often struggle to connect with hospitals that need their services.</p>
+          </article>
+          <article class="info-card">
+            <div class="icon-box"><span class="material-symbols-outlined">history_toggle_off</span></div>
+            <h3>Equipment History Matters</h3>
+            <p>Service details, repair records, and equipment information should be easy to access.</p>
+          </article>
+        </div>
+
+        <div class="banner">
+          <div>
+            <div class="banner-eyebrow">Our Commitment</div>
+            <h4>Our Goal Is Simple.</h4>
+            <p>We want hospitals, engineers, and equipment companies to find each other and manage equipment service better.</p>
+          </div>
+          <a href="#lead-form" class="btn btn-primary">Join Us Early</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 3: HOW ASSETRA MED WORKS ============ -->
+    <section class="section section-alt" id="how">
+      <div class="container">
+        <div class="section-head">
+          <h2>How Assetra Med Works</h2>
+          <p class="subhead">A simple way to connect hospitals, engineers, and equipment.</p>
+        </div>
+
+        <div class="steps">
+          <article class="step">
+            <div>
+              <div class="step-top">
+                <span class="step-num blue">01</span>
+                <span class="material-symbols-outlined">qr_code</span>
+              </div>
+              <h3 style="margin-top:12px">Register Your Equipment</h3>
+              <p style="margin-top:4px">Add your patient monitor and generate its equipment QR code.</p>
+            </div>
+            <div class="preview">
+              <div class="preview-qr"><span class="material-symbols-outlined">qr_code</span></div>
+              <div class="preview-txt">
+                <div class="small-label">ASSETRA QR ID</div>
+                <div class="small-strong">#CBE-PM-082</div>
+                <div class="small-teal">Ready for Scan</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div>
+              <div class="step-top">
+                <span class="step-num teal">02</span>
+                <span class="material-symbols-outlined">person_pin_circle</span>
+              </div>
+              <h3 style="margin-top:12px">Find Service Support</h3>
+              <p style="margin-top:4px">Search for nearby biomedical engineers and check their ratings.</p>
+            </div>
+            <div class="preview">
+              <div class="avatar"><span class="material-symbols-outlined" style="font-size:16px">engineering</span></div>
+              <div class="preview-txt">
+                <div class="small-teal" style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block"></span>Active in Coimbatore</div>
+                <div class="small-strong">Field Engineer Available</div>
+                <div class="small-label">Spec: Patient Monitors</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="step">
+            <div>
+              <div class="step-top">
+                <span class="step-num blue">03</span>
+                <span class="material-symbols-outlined">assignment</span>
+              </div>
+              <h3 style="margin-top:12px">Track Service History</h3>
+              <p style="margin-top:4px">Access equipment details and keep service records organised.</p>
+            </div>
+            <div class="preview">
+              <div class="log-wrap">
+                <div class="log-row" style="padding-bottom:4px"><span>ICU Monitor #04</span><span class="ok">Service Logged</span></div>
+                <div class="log-row"><span>OT Monitor #02</span><span class="pending">Calibration Logged</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 4: LEAD FORM ============ -->
+    <section class="section" id="lead-form" style="border-top:1px solid rgba(194,198,209,0.2)">
+      <div class="lead-wrap">
+        <div class="section-head" style="margin-bottom:24px">
+          <h2>Be Part of Assetra Med</h2>
+          <p class="subhead">Are you a hospital, biomedical engineer, or medical equipment company? Register your interest.</p>
+        </div>
+
+        <div class="role-tabs" role="group" aria-label="Who are you?">
+          <button type="button" class="role-tab active" data-role="hospital" aria-pressed="true">
+            <span class="role-head"><span class="material-symbols-outlined">local_hospital</span>Hospital</span>
+            <small>For hospitals looking for equipment service support.</small>
+          </button>
+          <button type="button" class="role-tab" data-role="engineer" aria-pressed="false">
+            <span class="role-head"><span class="material-symbols-outlined">engineering</span>Biomedical Engineer</span>
+            <small>For engineers who want to connect with hospitals.</small>
+          </button>
+          <button type="button" class="role-tab" data-role="company" aria-pressed="false">
+            <span class="role-head"><span class="material-symbols-outlined">business</span>Equipment Company</span>
+            <small>For medical equipment dealers and suppliers.</small>
+          </button>
+        </div>
+
+        <div class="form-card">
+          <form id="leadForm" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="fullName">Full Name <span class="req">*</span></label>
+                <input type="text" id="fullName" placeholder="e.g. Dr. R. Sundaram" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email Address <span class="req">*</span></label>
+                <input type="email" id="email" placeholder="e.g. admin@kongucare.in" autocomplete="email" required />
+              </div>
+              <div class="field full">
+                <label for="phone">Mobile Number <span class="req">*</span></label>
+                <input type="tel" id="phone" placeholder="e.g. +91 98765 43210" autocomplete="tel" required />
+              </div>
+            </div>
+
+            <div class="submit-wrap">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                Register My Interest
+                <span class="material-symbols-outlined" style="font-size:14px">check_circle</span>
+              </button>
+              <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+              <p class="form-note">We will contact you when early access is available. No spam, ever.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 5: FREE EARLY ACCESS / FREE EQUIPMENT CHECK ============ -->
+    <section class="section section-alt" id="early-access">
+      <div class="container">
+        <div class="section-head">
+          <h2>Get Started Without Any Payment</h2>
+          <p class="subhead">We are opening early access for hospitals, engineers, and equipment companies.</p>
+        </div>
+
+        <div class="offers">
+          <article class="offer">
+            <div>
+              <div class="offer-top">
+                <span class="badge">Currently Free</span>
+                <span class="material-symbols-outlined">rocket_launch</span>
+              </div>
+              <h3>Free Early Access</h3>
+              <p>Join Assetra Med during our early development stage.</p>
+              <ul>
+                <li>Register your interest</li>
+                <li>Explore upcoming platform features</li>
+                <li>Share your feedback</li>
+                <li>Help us improve the platform</li>
+              </ul>
+            </div>
+            <div class="offer-foot">
+              <a href="#lead-form" class="btn btn-primary">Get Free Early Access</a>
+            </div>
+          </article>
+
+          <article class="offer">
+            <div>
+              <div class="offer-top">
+                <span class="badge">Currently Free</span>
+                <span class="material-symbols-outlined">fact_check</span>
+              </div>
+              <h3>Free Equipment Check</h3>
+              <p>Register your interest for an initial patient monitor equipment information check.</p>
+              <ul>
+                <li>Share your equipment details</li>
+                <li>Help us understand your service needs</li>
+                <li>Get information about the upcoming service workflow</li>
+              </ul>
+            </div>
+            <div class="offer-foot">
+              <!-- Cashfree payment link added to the equipment audit button; styling unchanged -->
+              <a href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener noreferrer" class="btn btn-teal" id="auditBtn">Request Equipment Check</a>
+            </div>
+          </article>
+        </div>
+
+        <p class="disclaimer">* Subject to confirmation. Does not promise physical inspection or immediate on-site repair during early stage.</p>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 6: WHAT PEOPLE TOLD US ============ -->
+    <section class="section" style="border-top:1px solid rgba(194,198,209,0.2)">
+      <div class="container">
+        <div class="section-head">
+          <span class="testi-pill"><span class="material-symbols-outlined">hearing</span>Authentic Listening Phase — No Fake Testimonials</span>
+          <h2>Voices From the Biomedical Community</h2>
+          <p class="subhead">We are listening to hospitals and biomedical professionals as we build Assetra Med.</p>
+        </div>
+
+        <div class="testi-grid">
+          <article class="testi">
+            <div>
+              <div class="testi-who"><span class="avatar-soft"><span class="material-symbols-outlined">local_hospital</span></span>[Hospital Owner Feedback]</div>
+              <p class="quote">“Real feedback will be added here after receiving permission.”</p>
+            </div>
+            <div class="testi-foot"><span class="material-symbols-outlined">lock</span>Hospital Administrator, Coimbatore</div>
+          </article>
+          <article class="testi">
+            <div>
+              <div class="testi-who"><span class="avatar-soft"><span class="material-symbols-outlined">engineering</span></span>[Biomedical Engineer Feedback]</div>
+              <p class="quote">“Real feedback will be added here after receiving permission.”</p>
+            </div>
+            <div class="testi-foot"><span class="material-symbols-outlined">lock</span>Independent Biomedical Specialist, Tiruppur</div>
+          </article>
+          <article class="testi">
+            <div>
+              <div class="testi-who"><span class="avatar-soft"><span class="material-symbols-outlined">business</span></span>[Equipment Company Feedback]</div>
+              <p class="quote">“Real feedback will be added here after receiving permission.”</p>
+            </div>
+            <div class="testi-foot"><span class="material-symbols-outlined">lock</span>Medical Equipment Distributor, Erode Belt</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 7: FAQ ============ -->
+    <section class="section section-alt" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>Frequently Asked Questions</h2>
+          <p class="subhead">Here are some answers to help you understand Assetra Med.</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>1. What is Assetra Med?</summary>
+            <p>Assetra Med is a web platform based in Coimbatore that connects small hospitals, biomedical service engineers, and medical equipment companies.</p>
+          </details>
+          <details class="faq-item">
+            <summary>2. Which equipment does Assetra Med support?</summary>
+            <p>We are starting with multi-parameter patient monitors and will expand to other equipment over time.</p>
+          </details>
+          <details class="faq-item">
+            <summary>3. Can hospitals find biomedical engineers?</summary>
+            <p>Yes. Hospitals can search for nearby biomedical service engineers and check their ratings.</p>
+          </details>
+          <details class="faq-item">
+            <summary>4. How does QR-based equipment tracking work?</summary>
+            <p>You register a piece of equipment and generate its QR code. Scanning the code gives quick access to its details and service history.</p>
+          </details>
+          <details class="faq-item">
+            <summary>5. Can biomedical engineers register?</summary>
+            <p>Yes. Biomedical engineers can register to connect with hospitals that need their services.</p>
+          </details>
+          <details class="faq-item">
+            <summary>6. Is Assetra Med free?</summary>
+            <p>Early access is currently free. Some services, such as the equipment check, are subject to confirmation.</p>
+          </details>
+          <details class="faq-item">
+            <summary>7. Is Assetra Med currently available?</summary>
+            <p>We are in our early development stage and are opening early access. Register your interest to be notified.</p>
+          </details>
+          <details class="faq-item">
+            <summary>8. Where is Assetra Med based?</summary>
+            <p>Assetra Med is based in Coimbatore, Tamil Nadu, India.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 8: FINAL CTA ============ -->
+    <section class="final-cta">
+      <svg class="wave" viewBox="0 0 1280 266" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 150 C 200 90, 400 200, 640 140 S 1080 80, 1280 150 L1280 266 L0 266 Z" fill="#ffffff" />
+      </svg>
+      <div class="inner">
+        <h2>Let's Make Equipment Service Easier.</h2>
+        <p>Whether you run a hospital or work as a biomedical engineer, we would like to hear from you.</p>
+        <div class="btns">
+          <a href="#lead-form" class="btn btn-teal" style="padding:16px 40px">Join Assetra Med</a>
+          <a href="#lead-form" class="btn btn-ghost" style="padding:17px 41px">Register Your Interest</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ SECTION 9: FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="brand">
+            <span class="brand-icon" style="background:#fff;width:32px;height:32px;border-radius:4px"><span class="material-symbols-outlined" style="font-size:18px">monitor_heart</span></span>
+            <span><b>Assetra</b> <span>Med</span></span>
+          </a>
+          <p>Connecting hospitals, biomedical engineers, and equipment companies.</p>
+          <div class="footer-loc"><span class="material-symbols-outlined">location_on</span>Coimbatore, Tamil Nadu, India.</div>
+        </div>
+
+        <div>
+          <h4>QUICK LINKS</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#why">Why Assetra Med</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#early-access">Early Access</a></li>
+            <li><a href="#faq">FAQs</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>JOIN ASSETRA MED</h4>
+          <ul>
+            <li><a href="#lead-form">For Hospitals</a></li>
+            <li><a href="#lead-form">For Biomedical Engineers</a></li>
+            <li><a href="#lead-form">For Equipment Companies</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>CONTACT</h4>
+          <div class="contact-item"><span class="material-symbols-outlined">mail</span>contact@assetramed.in</div>
+          <div class="contact-item"><span class="material-symbols-outlined">pin_drop</span>Coimbatore, Tamil Nadu</div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Assetra Med. All rights reserved. Built for the Biomedical Community.</span>
+        <span class="net">Coimbatore &amp; Kongu Biomedical Network Pilot</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ----- Configuration -----
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYzLqybulfgHU5oK6AIQYFrVYdBxDgH8A7yU_VzHC4zqu2CqDGEGzvXM0JxgaxbmbJJQ/exec";
+
+    // ----- Mobile menu -----
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const navCta = document.getElementById("navCta");
+
+    menuToggle.addEventListener("click", function () {
+      const isOpen = navLinks.classList.toggle("open");
+      navCta.classList.toggle("open", isOpen);
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.querySelector(".material-symbols-outlined").textContent = isOpen ? "close" : "menu";
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        navLinks.classList.remove("open");
+        navCta.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.querySelector(".material-symbols-outlined").textContent = "menu";
+      });
+    });
+
+    // ----- Role tabs (visual selection only) -----
+    document.querySelectorAll(".role-tab").forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        document.querySelectorAll(".role-tab").forEach(function (t) {
+          t.classList.remove("active");
+          t.setAttribute("aria-pressed", "false");
+        });
+        tab.classList.add("active");
+        tab.setAttribute("aria-pressed", "true");
+      });
+    });
+
+    // ----- Lead form -----
+    const form = document.getElementById("leadForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusEl = document.getElementById("formStatus");
+
+    function showStatus(message, type) {
+      statusEl.textContent = message;
+      statusEl.className = "form-status " + type;
+    }
+
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      submitBtn.firstChild.textContent = isLoading ? "Submitting… " : "Register My Interest ";
+    }
+
+    function showSuccess() {
+      setLoading(false);
+      form.reset();
+      showStatus("Thank you! We've received your details and will contact you soon.", "success");
+    }
+
+    function showError() {
+      setLoading(false);
+      showStatus("Something went wrong. Please check your connection and try again.", "error");
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+
+      if (!name || !email || !phone) {
+        showStatus("Please fill in your name, email and mobile number.", "error");
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showStatus("Please enter a valid email address.", "error");
+        return;
+      }
+
+      if (phone.replace(/\D/g, "").length < 10) {
+        showStatus("Please enter a valid mobile number.", "error");
+        return;
+      }
+
+      const url = SCRIPT_URL + "?" + new URLSearchParams({ name: name, email: email, phone: phone });
+
+      setLoading(true);
+      showStatus("", "");
+
+      fetch(url, { method: "GET", mode: "no-cors" })
+        .then(() => showSuccess())
+        .catch(() => showError());
+    });
+  </script>
+</body>
+</html>
